@@ -101,6 +101,11 @@ function pointerManipulation(local, fuso = 0){
             else
                 session.innerHTML = '&nbspAM'
 
+            console.log(hrs)
+
+            if( hrs > 24 )
+                hrs = hrs - 24;
+
             document.getElementById(`hours${normalizeString(local)}`).innerHTML = hrs;
             document.getElementById(`minutes${normalizeString(local)}`).innerHTML = min;
             document.getElementById(`seconds${normalizeString(local)}`).innerHTML = sec;
