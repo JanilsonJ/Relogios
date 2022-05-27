@@ -27,6 +27,10 @@ body {
 .relogio {
     padding: 30px;
     box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .localizacao {
@@ -433,4 +437,23 @@ body {
 
 .clock .marcadores.marcadores-60{
     --rotation: 360deg;
+}
+
+/* Relógio Digital */
+
+.digitalClock {
+    font-family: 'Zen Dots', cursive;
+    margin-top: 10px;
+    width: 50%;
+    background-color: #0f0b0e;
+background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+    color: #bf1212;
+
+    border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 5px;
+    box-sizing: border-box;
 }

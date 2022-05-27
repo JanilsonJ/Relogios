@@ -50,6 +50,17 @@ function newClock(local){
                 ${clockNums()}
     
                 ${clockMarks()}
+
+            </div>
+            
+            <div class="digitalClock">
+                <span id="hours${normalizeString(local)}">00</span>
+                <span>:</span>
+                <span id="minutes${normalizeString(local)}">00</span>
+                <span>:</span>
+                <span id="seconds${normalizeString(local)}">00</span>
+                <span id="session${normalizeString(local)}">AM</span>
+            </div>
         </div>`
         );
     });    
@@ -60,34 +71,45 @@ const setRotation = (element, rotationPercentage) => {
 }
 
 /* Manipulação do relogio de Londres e Brasília*/
-function handManipulation(local, fuso = 0){
-    try {
-        $(document).ready(function() {
-            const hourHand = document.querySelector(`.hand.hour.${normalizeString(local)}`);
-            const minutesHand = document.querySelector(`.hand.minutes.${normalizeString(local)}`);
-            const secondsHand = document.querySelector(`.hand.seconds.${normalizeString(local)}`);
-            
-            
-            const setClock = () => {
-                const currentDate = new Date();
-            
-                const secondsPercentage = currentDate.getSeconds() / 60;
-                const minutesPercentage = (secondsPercentage + currentDate.getMinutes()) / 60;
-                const hoursPercentage = (minutesPercentage + currentDate.getHours() + fuso) / 12;
-            
-                setRotation(secondsHand, secondsPercentage);
-                setRotation(minutesHand, minutesPercentage);
-                setRotation(hourHand, hoursPercentage);
-            }
-            
-            
-            setClock();
-            
-            setInterval(setClock, 1000)
-        });
-    } catch (error) {
-        console.log(error)
-    }
+function pointerManipulation(local, fuso = 0){
+    $(document).ready(function() {
+        /* Relógio Analógico */
+        const hourHand = document.querySelector(`.hand.hour.${normalizeString(local)}`);
+        const minutesHand = document.querySelector(`.hand.minutes.${normalizeString(local)}`);
+        const secondsHand = document.querySelector(`.hand.seconds.${normalizeString(local)}`);
+        
+        
+        const setClock = () => {
+            const currentDate = new Date();
+        
+            const secondsPercentage = currentDate.getSeconds() / 60;
+            const minutesPercentage = (secondsPercentage + currentDate.getMinutes()) / 60;
+            const hoursPercentage = (minutesPercentage + currentDate.getHours() + fuso) / 12;
+        
+            setRotation(secondsHand, secondsPercentage);
+            setRotation(minutesHand, minutesPercentage);
+            setRotation(hourHand, hoursPercentage);
+
+            /* Relógio Digital */
+            var hrs = currentDate.getHours() + fuso;
+            var min = currentDate.getMinutes();
+            var sec = currentDate.getSeconds();
+            var session = document.getElementById(`session${normalizeString(local)}`);
+
+            if(hrs >= 12)
+                session.innerHTML = '&nbspPM'
+            else
+                session.innerHTML = '&nbspAM'
+
+            document.getElementById(`hours${normalizeString(local)}`).innerHTML = hrs;
+            document.getElementById(`minutes${normalizeString(local)}`).innerHTML = min;
+            document.getElementById(`seconds${normalizeString(local)}`).innerHTML = sec;
+        }
+        
+        setClock();
+        
+        setInterval(setClock, 10);
+    });
 }
 
 /* Criação dos relógios de Londres e Brasília*/
@@ -97,7 +119,7 @@ newClock('Nova York');
 newClock('Tóquio');
 
 /* Altualizar o relógio */
-setInterval(handManipulation('Brasília'), 1000);
-setInterval(handManipulation('Londres', 4), 1000);
-setInterval(handManipulation('Nova York', -1), 1000);
-setInterval(handManipulation('Tóquio', 12), 1000);
+pointerManipulation('Brasília');
+pointerManipulation('Londres', 4);
+pointerManipulation('Nova York', -1);
+pointerManipulation('Tóquio', 12);
