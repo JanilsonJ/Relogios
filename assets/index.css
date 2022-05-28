@@ -44,8 +44,9 @@ body {
     background-image: url("https://www.transparenttextures.com/patterns/smooth-wall-dark.png");
     color: #000000;
 
-    border-radius: 50%;
-    border: 6px solid #adadad;
+    border-radius: 40%;
+    border: 6px #7a7979;
+    border-style: outset;
     position: relative;
     box-shadow: 10px 5px 25px 0px #000000;
 }
