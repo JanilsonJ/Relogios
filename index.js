@@ -96,12 +96,10 @@ function pointerManipulation(local, fuso = 0){
             var sec = currentDate.getSeconds();
             var session = document.getElementById(`session${normalizeString(local)}`);
 
-            if(hrs >= 12)
+            if(hrs >= 12 && hrs <= 24 )
                 session.innerHTML = '&nbspPM'
             else
                 session.innerHTML = '&nbspAM'
-
-            console.log(hrs)
 
             if( hrs > 24 )
                 hrs = hrs - 24;
