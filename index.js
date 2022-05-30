@@ -43,7 +43,7 @@ function newClock(local){
             <h2 class="localizacao">Horário de ${local}</h2>
             
             <div class="clock">
-                <div id="test" class="hand seconds ${normalizeString(local)}"></div>
+                <div class="hand seconds ${normalizeString(local)}"></div>
                 <div class="hand minutes ${normalizeString(local)}"></div>
                 <div class="hand hour ${normalizeString(local)}"></div>
     
