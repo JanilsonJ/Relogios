@@ -36,32 +36,34 @@ function normalizeString(str){
 const locais = new Array();;
 function newClock(local){
     locais.push(local);
+    const normalizeLocale = normalizeString(local)
 
     $(document).ready(function() {
         $('.clocks').append(`
-        <div class="relogio">
-            <h2 class="localizacao">Horário de ${local}</h2>
-            
-            <div class="clock">
-                <div class="hand seconds ${normalizeString(local)}"></div>
-                <div class="hand minutes ${normalizeString(local)}"></div>
-                <div class="hand hour ${normalizeString(local)}"></div>
-    
-                ${clockNums()}
-    
-                ${clockMarks()}
-
-            </div>
-            
-            <div class="digitalClock">
-                <span id="hours${normalizeString(local)}">00</span>
-                <span>:</span>
-                <span id="minutes${normalizeString(local)}">00</span>
-                <span>:</span>
-                <span id="seconds${normalizeString(local)}">00</span>
-                <span id="session${normalizeString(local)}">AM</span>
-            </div>
-        </div>`
+            <div class="relogio">
+                <div class="clock">
+                    <div class="insideClock">
+                        <h2>${local}</h2>
+                        <div class="digitalClock">
+                            <span id="hours${normalizeLocale}">00</span>
+                            <span>:</span>
+                            <span id="minutes${normalizeLocale}">00</span>
+                            <span>:</span>
+                            <span id="seconds${normalizeLocale}">00</span>
+                            <span id="session${normalizeLocale}">AM</span>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="hand seconds ${normalizeLocale}"></div>
+                    <div class="hand minutes ${normalizeLocale}"></div>
+                    <div class="hand hour ${normalizeLocale}"></div>
+        
+                    ${clockNums()}
+        
+                    ${clockMarks()}
+                </div>
+            </div>`
         );
     });    
 }
@@ -96,16 +98,18 @@ function pointerManipulation(local, fuso = 0){
             var sec = currentDate.getSeconds();
             var session = document.getElementById(`session${normalizeString(local)}`);
 
-            if( hrs > 24 )
-                hrs = hrs - 24;
+            if( hrs > 24 ) hrs = hrs - 24;
 
-            if( hrs < 0 )
-                hrs = hrs + 24;
+            if( hrs < 0 ) hrs = hrs + 24;
 
             if(hrs >= 12 && hrs <= 24)
                 session.innerHTML = '&nbspPM'
             else
                 session.innerHTML = '&nbspAM'
+
+            if (hrs < 10 ) hrs = '0' + hrs;
+            if (min < 10 ) min = '0' + min;
+            if (sec < 10 ) sec = '0' + sec;
 
             document.getElementById(`hours${normalizeString(local)}`).innerHTML = hrs;
             document.getElementById(`minutes${normalizeString(local)}`).innerHTML = min;
